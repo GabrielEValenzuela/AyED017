@@ -1,10 +1,12 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <stack>
 
 #include "Hanoi.h"
 
 using std::cout;        using std::stack;
-using std::endl;
+using std::endl;        using std::string;
 
 Hanoi::Hanoi(int NoD){
     n = NoD;
@@ -37,6 +39,28 @@ void Hanoi::reset(){
 void Hanoi::move(stack<int> origin, stack<int> objective){
     objective.push(origin.top());
     origin.pop();
+}
+
+void Hanoi::print_towers(){
+    osstream stm;
+    
+    stm << "Lista A: " << print_tower(A) << endl;
+    stm << "Lista B: " << print_tower(B) << endl;
+    stm << "Lista C: " << print_tower(C) << endl;
+    stm << endl;
+    
+    cout << stm.str();
+}
+
+string Hanoi::print_tower(stack<int> tower){
+    list<int> buffer_list (tower);
+    ostream stm;
+    
+    for (int i = 0; i < n; i++){
+        stm << buffer_list[i] << " | "
+    }
+    
+    return stm.str();
 }
 
 void Hanoi::solve_iterative(){
