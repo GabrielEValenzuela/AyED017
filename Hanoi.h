@@ -14,7 +14,7 @@ class Hanoi {
             @param origin Torre de donde sacar el disco.
             @param objective Torre en donde colocarlo.
           */
-        void move();
+        void move(std::stack<int> origin, std::stack<int> objective);
 
         /** Llena la torre 'tower' con "discos" en orde creciente.
             @param tower Torre a llenar.
