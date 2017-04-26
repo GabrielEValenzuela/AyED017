@@ -34,6 +34,11 @@ void Hanoi::reset(){
     populate(A);
 }
 
+void Hanoi::move(stack<int> origin, stack<int> objective){
+    objective.push(origin.top());
+    origin.pop();
+}
+
 void Hanoi::solve_iterative(){
 
 }
