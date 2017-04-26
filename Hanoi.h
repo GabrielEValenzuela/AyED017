@@ -25,6 +25,11 @@ class Hanoi {
             @param tower Torre a vaciar.
           */
         void clear(std::stack<int> tower);
+    
+        /** Genera el string para imprimir de una sola torre.
+            @param tower: Torre a imprimir.
+          */
+        std::string print_tower(std::stack<int> tower);
 
     public:
         /** Constructor.
