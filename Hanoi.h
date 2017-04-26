@@ -2,7 +2,7 @@
 
 class Hanoi {
     private:
-        /** Tres colas representando cada torre.
+        /** Tres pilas representando cada torre.
           */
         std::stack<int> A, B, C;
 
