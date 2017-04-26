@@ -1,4 +1,5 @@
 #include <stack>
+#include <string>
 
 class Hanoi {
     private:
