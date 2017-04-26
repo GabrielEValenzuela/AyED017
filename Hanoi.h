@@ -47,4 +47,13 @@ class Hanoi {
         /** Resetea el sistema al estado original.
           */
         void reset();
+    
+        /** Estado del sistema.
+            @return true si el sistema está resuelto.
+          */
+        bool solved() { return C.size() == n; };
+    
+        /** Imprime el estado de las tres torres.
+          */
+        void print_towers();
 };
