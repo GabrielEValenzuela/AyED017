@@ -7,6 +7,8 @@ using std::cout;        using std::stack;
 using std::endl;
 
 Hanoi::Hanoi(int NoD){
+    n = NoD;
+    
     populate(A);
     clear(B);
     clear(C);
