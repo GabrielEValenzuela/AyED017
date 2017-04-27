@@ -1,30 +1,30 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <stack>
+#include <deque>
+#include <list>
 
 #include "Hanoi.h"
 
-using std::cout;        using std::stack;
+using std::cout;        using std::deque;
 using std::endl;        using std::string;
+using std::list;        using std::ostringstream;
 
-Hanoi::Hanoi(int NoD){
-    n = NoD;
-    
+Hanoi::Hanoi(int NoD): n(NoD) {
     populate(A);
     clear(B);
     clear(C);
 }
 
-void Hanoi::populate(stack<int> tower){
+void Hanoi::populate(deque<int> tower){
     for (int i = n; i > 0; i--){
-        tower.push(i);
+        tower.push_front(i);
     }
 }
 
-void Hanoi::clear(stack<int> tower){
+void Hanoi::clear(deque<int> tower){
     while(!tower.empty()){
-        tower.pop();
+        tower.pop_front();
     }
 }
 
@@ -36,28 +36,28 @@ void Hanoi::reset(){
     populate(A);
 }
 
-void Hanoi::move(stack<int> origin, stack<int> objective){
-    objective.push(origin.top());
-    origin.pop();
+void Hanoi::move(deque<int> origin, deque<int> objective){
+    objective.push_front(origin.front());
+    origin.pop_front();
 }
 
-void Hanoi::print_towers(){
-    osstream stm;
+string Hanoi::print_towers(){
+    ostringstream stm;
     
     stm << "Lista A: " << print_tower(A) << endl;
     stm << "Lista B: " << print_tower(B) << endl;
     stm << "Lista C: " << print_tower(C) << endl;
     stm << endl;
     
-    cout << stm.str();
+    return stm.str();
 }
 
-string Hanoi::print_tower(stack<int> tower){
-    list<int> buffer_list (tower);
-    ostream stm;
+string Hanoi::print_tower(deque<int> tower){
+    deque<int>::iterator it;
+    ostringstream stm;
     
-    for (int i = 0; i < n; i++){
-        stm << buffer_list[i] << " | "
+    for (it = tower.begin(); it != tower.end(); it++){
+        stm << *it << " | ";
     }
     
     return stm.str();

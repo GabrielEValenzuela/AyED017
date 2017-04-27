@@ -9,7 +9,7 @@ int main(){
     cout << "Introduzca el numero de discos: ";
     cin >> n;
 
-    Hanoi h = new Hanoi(n);
+    Hanoi h(n);
 
     h.solve_recursion_simple();
 

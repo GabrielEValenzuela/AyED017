@@ -1,11 +1,11 @@
-#include <stack>
+#include <deque>
 #include <string>
 
 class Hanoi {
     private:
         /** Tres pilas representando cada torre.
           */
-        std::stack<int> A, B, C;
+        std::deque<int> A, B, C;
 
         /** Cantidad de discos.
           */
@@ -15,28 +15,28 @@ class Hanoi {
             @param origin Torre de donde sacar el disco.
             @param objective Torre en donde colocarlo.
           */
-        void move(std::stack<int> origin, std::stack<int> objective);
+        void move(std::deque<int> origin, std::deque<int> objective);
 
         /** Llena la torre 'tower' con "discos" en orde creciente.
             @param tower Torre a llenar.
           */
-        void populate(std::stack<int> tower);
+        void populate(std::deque<int> tower);
         
         /** Saca todos los discos de la torre 'tower'.
             @param tower Torre a vaciar.
           */
-        void clear(std::stack<int> tower);
+        void clear(std::deque<int> tower);
     
         /** Genera el string para imprimir de una sola torre.
             @param tower: Torre a imprimir.
           */
-        std::string print_tower(std::stack<int> tower);
+        std::string print_tower(std::deque<int> tower);
 
     public:
         /** Constructor.
             @param NoD Número de discos.
           */
-        Hanoi(int NoD);
+        Hanoi(int);
 
         /** Resuelve el puzzle con un método iterativo.
           */
@@ -61,5 +61,5 @@ class Hanoi {
     
         /** Imprime el estado de las tres torres.
           */
-        void print_towers();
+        std::string print_towers();
 };
