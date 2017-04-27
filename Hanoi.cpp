@@ -2,7 +2,6 @@
 #include <sstream>
 #include <string>
 #include <deque>
-#include <list>
 
 #include "Hanoi.h"
 
