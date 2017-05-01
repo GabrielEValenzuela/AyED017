@@ -11,28 +11,32 @@ class Hanoi {
           */
         int n;
 
-        /** Mueve el disco superior entre una torre y otra.
+        /** Mueve el disco superior desde 'origin' hasta 'objective'.
             @param origin Torre de donde sacar el disco.
             @param objective Torre en donde colocarlo.
             @returns Un string indicando el elemento que fue movido.
           */
-        std::string move(std::deque<int> origin, std::deque<int> objective);
+        void move(std::deque<int>& origin, std::deque<int>& objective);
 
-        /** Llena la torre 'tower' con "discos" en orde creciente.
-            @param tower Torre a llenar.
+        /** Mueve el disco superior entre una torre y otra én la direccion que sea legal.
+            @param origin Torre de donde sacar el disco.
+            @param objective Torre en donde colocarlo.
+            @returns Un string indicando el elemento que fue movido.
           */
-        void populate(std::deque<int> tower);
+        void legalMove(std::deque<int>& origin, std::deque<int>& objective);
         
         /** Saca todos los discos de la torre 'tower'.
             @param tower Torre a vaciar.
           */
-        void clear(std::deque<int> tower);
+        void clear(std::deque<int>& tower);
     
         /** Genera el string para imprimir de una sola torre.
             @param tower: Torre a imprimir.
             @returns Un string con el estado de la torre.
           */
-        std::string print_tower(std::deque<int> tower);
+        std::string print_tower(const std::deque<int>& tower);
+
+        std::string solve_iterative_aux();
 
     public:
         /** Constructor. Crea las tres torres, llena la torre a con 'n' discos.
@@ -62,7 +66,9 @@ class Hanoi {
         /** Estado del sistema.
             @return true si el sistema está resuelto.
           */
-        bool solved() { return C.size() == n; };
+        bool solved() const { return C.size() == n; };
+
+        bool isLegal(const std::deque<int>& origin, const std::deque<int>& destination) const;
     
         /** Arma un string con el estado de las tres torres.
           @returns El strring con dicho estado.

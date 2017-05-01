@@ -7,37 +7,37 @@
 
 using std::cout;        using std::deque;
 using std::endl;        using std::string;
-using std::ostringstream;
+                        using std::ostringstream;
 
-void Hanoi::populate(deque<int> tower){
-    for (int i = n; i > 0; i--){
-        tower.push_front(i);
-    }
-}
-
-void Hanoi::clear(deque<int> tower){
+void Hanoi::clear(deque<int>& tower){
     while(!tower.empty()){
         tower.pop_front();
     }
 }
 
 void Hanoi::reset(){
-    clear(A);
+    for (int i = 0; i < n; i++) A.push_front(i);
     clear(B);
     clear(C);
-
-    populate(A);
 }
 
-string Hanoi::move(deque<int> origin, deque<int> objective){
-    ostringstream stm;
+bool Hanoi::isLegal(const deque<int>& origin, const deque<int>& destination) const{
+    if (origin.empty()) return false;
+    else if (destination.empty()) return true;
+    else return origin.back() < destination.back();
+}
 
-    stm << "Moviendo " << origin.front() << endl;
+void Hanoi::move(deque<int>& origin, deque<int>& objective){
+    objective.push_back(origin.back());
+    origin.pop_back();
+}
 
-    objective.push_front(origin.front());
-    origin.pop_front();
-
-    return stm.str();
+void Hanoi::legalMove(deque<int>& origin, deque<int>& objective){
+    if (isLegal(origin, objective)){
+        move(origin, objective);
+    } else if (isLegal(objective, origin)){
+        move(objective, origin);
+    }
 }
 
 string Hanoi::print_towers(){
@@ -51,8 +51,8 @@ string Hanoi::print_towers(){
     return stm.str();
 }
 
-string Hanoi::print_tower(deque<int> tower){
-    deque<int>::iterator it;
+string Hanoi::print_tower(const deque<int>& tower) {
+    deque<int>::const_iterator it;
     ostringstream stm;
     
     for (it = tower.begin(); it != tower.end(); it++){
@@ -62,12 +62,38 @@ string Hanoi::print_tower(deque<int> tower){
     return stm.str();
 }
 
+string Hanoi::solve_iterative_aux(){
+    ostringstream stm;
+    int pasos = 0;
+    
+    while (true){
+        ++pasos;
+        legalMove(A, C);
+        stm << print_towers();
+        if (solved()) break;
+        ++pasos;
+        legalMove(A, B);
+        stm << print_towers();
+        ++pasos;
+        legalMove(C, A);
+        stm << print_towers();
+        ++pasos;
+        legalMove(B, C);
+        stm << print_towers();
+    }
+
+    stm << "Pasos totales: " << pasos << ".";
+
+    return stm.str();
+}
+
 string Hanoi::solve_iterative(){
     ostringstream stm;
     stm << "Método: Iterativo" << endl
         << "Estado de las torres al entrar: " << endl
         << print_towers()<< endl << endl;
 
+    stm << solve_iterative_aux() << endl;
 
     return stm.str();
 }
@@ -78,6 +104,7 @@ string Hanoi::solve_recursion_simple(){
         << "Estado de las torres al entrar: " << endl
         << print_towers()<< endl << endl;
 
+    //solve_recursion_simple_aux(n, A, C);
 
     return stm.str();
 }
