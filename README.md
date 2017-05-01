@@ -1,6 +1,8 @@
 # AyED017
 Proyectos (Parciales) Algoritmos
 
+# MARTES 2 DE MAYO - 13HS EN LA BIBLIOTECA. TRATO DE LLEVAR EL INFORME
+
 ## Primer parcial:
   Entrega el Jueves 4 de Abril. Adjuntar en un CD los datos y el informe
   
