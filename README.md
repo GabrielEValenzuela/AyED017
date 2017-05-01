@@ -1,6 +1,8 @@
 # AyED017
 Proyectos (Parciales) Algoritmos
 
+# MARTES 2 DE MAYO - 13HS EN LA BIBLIOTECA. TRATO DE LLEVAR EL INFORME
+
 ## Primer parcial:
   Entrega el Jueves 4 de Abril. Adjuntar en un CD los datos y el informe
   
@@ -10,4 +12,4 @@ Proyectos (Parciales) Algoritmos
   + Hacer informe (Si querés me encargo yo y le mando una guitarreada para quedar de 20)
   + Implementar métodos resolutivos.
   + ¿Pasar torres por referencia? (Creo que no porque son campos del objeto, pero quisiyo. Hay que probarlo.) - Las torres o los discos ? Las torres no vienen a ser las pilas que almacenan los discos (Entero te gusta el pedazo, putaso) ? sí, no dije nada.
-  + Y eia ? La lozadeña? chiquiiiiita
+  + Y eia ? La doc? chiquiiiiita
