@@ -38,6 +38,8 @@ class Hanoi {
 
         std::string solve_iterative_aux();
 
+        std::string solve_recursion_simple_aux(std::ostringstream& stm, int pasos);
+
     public:
         /** Constructor. Crea las tres torres, llena la torre a con 'n' discos.
             @param NoD Número de discos.

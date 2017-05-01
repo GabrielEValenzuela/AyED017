@@ -87,6 +87,27 @@ string Hanoi::solve_iterative_aux(){
     return stm.str();
 }
 
+string Hanoi::solve_recursion_simple_aux(ostringstream& stm, int pasos){    
+    ++pasos;
+    legalMove(A, C);
+    stm << print_towers();
+    if (solved()) {
+        stm << "Pasos totales: " << pasos << ".";
+        return stm.str();
+    }
+    ++pasos;
+    legalMove(A, B);
+    stm << print_towers();
+    ++pasos;
+    legalMove(C, A);
+    stm << print_towers();
+    ++pasos;
+    legalMove(B, C);
+    stm << print_towers();
+
+    return solve_recursion_simple_aux(stm, pasos);
+}
+
 string Hanoi::solve_iterative(){
     ostringstream stm;
     stm << "Método: Iterativo" << endl
@@ -104,7 +125,8 @@ string Hanoi::solve_recursion_simple(){
         << "Estado de las torres al entrar: " << endl
         << print_towers()<< endl << endl;
 
-    //solve_recursion_simple_aux(n, A, C);
+    ostringstream bfr;
+    stm << solve_recursion_simple_aux(bfr, 0) << endl;
 
     return stm.str();
 }

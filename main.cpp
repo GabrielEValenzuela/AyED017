@@ -14,9 +14,9 @@ int main(){
 
     Hanoi h(n);
 
-    //log_file << h.solve_recursion_simple();
+    log_file << h.solve_recursion_simple();
 
-    //h.reset();
+    h.reset();
     log_file << h.solve_iterative();
 
     //h.reset();
