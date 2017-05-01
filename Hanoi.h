@@ -14,8 +14,9 @@ class Hanoi {
         /** Mueve el disco superior entre una torre y otra.
             @param origin Torre de donde sacar el disco.
             @param objective Torre en donde colocarlo.
+            @returns Un string indicando el elemento que fue movido.
           */
-        void move(std::deque<int> origin, std::deque<int> objective);
+        std::string move(std::deque<int> origin, std::deque<int> objective);
 
         /** Llena la torre 'tower' con "discos" en orde creciente.
             @param tower Torre a llenar.
@@ -29,26 +30,30 @@ class Hanoi {
     
         /** Genera el string para imprimir de una sola torre.
             @param tower: Torre a imprimir.
+            @returns Un string con el estado de la torre.
           */
         std::string print_tower(std::deque<int> tower);
 
     public:
-        /** Constructor.
+        /** Constructor. Crea las tres torres, llena la torre a con 'n' discos.
             @param NoD Número de discos.
           */
-        Hanoi(int);
+        Hanoi(int NoD): n(NoD) { reset(); };
 
         /** Resuelve el puzzle con un método iterativo.
+          @returns Un string con todo el proceso para resolver el sistema.
           */
-        void solve_iterative();
+        std::string solve_iterative();
         
         /** Resuelve el puzzle con un método recursivo simple.
+          @returns Un string con todo el proceso para resolver el sistema.
           */ 
-        void solve_recursion_simple();
+        std::string solve_recursion_simple();
         
-        /** Resuelve el puzzle con un étodo recursivo doble.
+        /** Resuelve el puzzle con un método recursivo doble.
+          @returns Un string con todo el proceso para resolver el sistema.
           */ 
-        void solve_recursion_double();
+        std::string solve_recursion_double();
 
         /** Resetea el sistema al estado original.
           */
@@ -59,7 +64,8 @@ class Hanoi {
           */
         bool solved() { return C.size() == n; };
     
-        /** Imprime el estado de las tres torres.
+        /** Arma un string con el estado de las tres torres.
+          @returns El strring con dicho estado.
           */
         std::string print_towers();
 };

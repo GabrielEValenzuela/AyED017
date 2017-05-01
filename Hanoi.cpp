@@ -9,12 +9,6 @@ using std::cout;        using std::deque;
 using std::endl;        using std::string;
 using std::list;        using std::ostringstream;
 
-Hanoi::Hanoi(int NoD): n(NoD) {
-    populate(A);
-    clear(B);
-    clear(C);
-}
-
 void Hanoi::populate(deque<int> tower){
     for (int i = n; i > 0; i--){
         tower.push_front(i);
@@ -35,9 +29,15 @@ void Hanoi::reset(){
     populate(A);
 }
 
-void Hanoi::move(deque<int> origin, deque<int> objective){
+string Hanoi::move(deque<int> origin, deque<int> objective){
+    ostringstream stm;
+
+    stm << "Moviendo " << origin.front() << endl;
+
     objective.push_front(origin.front());
     origin.pop_front();
+
+    return stm.str();
 }
 
 string Hanoi::print_towers(){
@@ -62,14 +62,32 @@ string Hanoi::print_tower(deque<int> tower){
     return stm.str();
 }
 
-void Hanoi::solve_iterative(){
+string Hanoi::solve_iterative(){
+    ostringstream stm;
+    stm << "Método: Iterativo" << endl
+        << "Estado de las torres al entrar: " << endl
+        << print_towers()<< endl << endl;
 
+
+    return stm.str();
 }
 
-void Hanoi::solve_recursion_simple(){
+string Hanoi::solve_recursion_simple(){
+    ostringstream stm;
+    stm << "Método: Recursivo Simple" << endl
+        << "Estado de las torres al entrar: " << endl
+        << print_towers()<< endl << endl;
 
+
+    return stm.str();
 }
 
-void Hanoi::solve_recursion_double(){
+string Hanoi::solve_recursion_double(){
+    ostringstream stm;
+    stm << "Método: Recursivo Doble" << endl
+        << "Estado de las torres al entrar: " << endl
+        << print_towers()<< endl << endl;
 
+
+    return stm.str();
 }
