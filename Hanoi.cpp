@@ -7,7 +7,7 @@
 
 using std::cout;        using std::deque;
 using std::endl;        using std::string;
-using std::list;        using std::ostringstream;
+using std::ostringstream;
 
 void Hanoi::populate(deque<int> tower){
     for (int i = n; i > 0; i--){
