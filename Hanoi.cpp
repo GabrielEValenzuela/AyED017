@@ -32,7 +32,9 @@ void Hanoi::move(deque<int>& origin, deque<int>& objective){
     origin.pop_back();
 }
 
-void Hanoi::legalMove(deque<int>& origin, deque<int>& objective){
+void Hanoi::legalMove(char origin_c, char objective_c){
+    deque<int> origin = get_tower(origin_c), objective = get_tower(objective_c);
+
     if (isLegal(origin, objective)){
         move(origin, objective);
     } else if (isLegal(objective, origin)){
@@ -62,81 +64,19 @@ string Hanoi::print_tower(const deque<int>& tower) {
     return stm.str();
 }
 
-string Hanoi::solve_iterative_aux(){
-    ostringstream stm;
-    int pasos = 0;
-    
-    while (true){
-        ++pasos;
-        legalMove(A, C);
-        stm << print_towers();
-        if (solved()) break;
-        ++pasos;
-        legalMove(A, B);
-        stm << print_towers();
-        ++pasos;
-        legalMove(C, A);
-        stm << print_towers();
-        ++pasos;
-        legalMove(B, C);
-        stm << print_towers();
+deque<int>& Hanoi::get_tower(char tower){
+    switch(tower){
+        case 'A':
+            return A;
+            break;
+        case 'B':
+            return B;
+            break;
+        case 'C':
+            return C;
+            break;
+        default:
+            deque<int>* h = new deque<int>;
+            return *h;
     }
-
-    stm << "Pasos totales: " << pasos << ".";
-
-    return stm.str();
-}
-
-string Hanoi::solve_recursion_simple_aux(ostringstream& stm, int pasos){    
-    ++pasos;
-    legalMove(A, C);
-    stm << print_towers();
-    if (solved()) {
-        stm << "Pasos totales: " << pasos << ".";
-        return stm.str();
-    }
-    ++pasos;
-    legalMove(A, B);
-    stm << print_towers();
-    ++pasos;
-    legalMove(C, A);
-    stm << print_towers();
-    ++pasos;
-    legalMove(B, C);
-    stm << print_towers();
-
-    return solve_recursion_simple_aux(stm, pasos);
-}
-
-string Hanoi::solve_iterative(){
-    ostringstream stm;
-    stm << "Método: Iterativo" << endl
-        << "Estado de las torres al entrar: " << endl
-        << print_towers()<< endl << endl;
-
-    stm << solve_iterative_aux() << endl;
-
-    return stm.str();
-}
-
-string Hanoi::solve_recursion_simple(){
-    ostringstream stm;
-    stm << "Método: Recursivo Simple" << endl
-        << "Estado de las torres al entrar: " << endl
-        << print_towers()<< endl << endl;
-
-    ostringstream bfr;
-    stm << solve_recursion_simple_aux(bfr, 0) << endl;
-
-    return stm.str();
-}
-
-string Hanoi::solve_recursion_double(){
-    ostringstream stm;
-    stm << "Método: Recursivo Doble" << endl
-        << "Estado de las torres al entrar: " << endl
-        << print_towers()<< endl << endl;
-
-
-    return stm.str();
 }

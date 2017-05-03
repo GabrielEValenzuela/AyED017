@@ -17,13 +17,6 @@ class Hanoi {
             @returns Un string indicando el elemento que fue movido.
           */
         void move(std::deque<int>& origin, std::deque<int>& objective);
-
-        /** Mueve el disco superior entre una torre y otra én la direccion que sea legal.
-            @param origin Torre de donde sacar el disco.
-            @param objective Torre en donde colocarlo.
-            @returns Un string indicando el elemento que fue movido.
-          */
-        void legalMove(std::deque<int>& origin, std::deque<int>& objective);
         
         /** Saca todos los discos de la torre 'tower'.
             @param tower Torre a vaciar.
@@ -36,9 +29,7 @@ class Hanoi {
           */
         std::string print_tower(const std::deque<int>& tower);
 
-        std::string solve_iterative_aux();
-
-        std::string solve_recursion_simple_aux(std::ostringstream& stm, int pasos);
+        std::deque<int>& get_tower(char tower);
 
     public:
         /** Constructor. Crea las tres torres, llena la torre a con 'n' discos.
@@ -46,22 +37,14 @@ class Hanoi {
           */
         Hanoi(int NoD): n(NoD) { reset(); };
 
-        /** Resuelve el puzzle con un método iterativo.
-          @returns Un string con todo el proceso para resolver el sistema.
+        /** Mueve el disco superior entre una torre y otra én la direccion que sea legal.
+            @param origin Torre de donde sacar el disco.
+            @param objective Torre en donde colocarlo.
+            @returns Un string indicando el elemento que fue movido.
           */
-        std::string solve_iterative();
-        
-        /** Resuelve el puzzle con un método recursivo simple.
-          @returns Un string con todo el proceso para resolver el sistema.
-          */ 
-        std::string solve_recursion_simple();
-        
-        /** Resuelve el puzzle con un método recursivo doble.
-          @returns Un string con todo el proceso para resolver el sistema.
-          */ 
-        std::string solve_recursion_double();
+        void legalMove(char origin, char objective);
 
-        /** Resetea el sistema al estado original.
+       /** Resetea el sistema al estado original.
           */
         void reset();
     
