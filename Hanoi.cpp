@@ -33,7 +33,7 @@ void Hanoi::move(deque<int>& origin, deque<int>& objective){
 }
 
 void Hanoi::legalMove(char origin_c, char objective_c){
-    deque<int> origin = get_tower(origin_c), objective = get_tower(objective_c);
+    deque<int>& origin = get_tower(origin_c),& objective = get_tower(objective_c);
 
     if (isLegal(origin, objective)){
         move(origin, objective);
@@ -75,8 +75,5 @@ deque<int>& Hanoi::get_tower(char tower){
         case 'C':
             return C;
             break;
-        default:
-            deque<int>* h = new deque<int>;
-            return *h;
     }
 }

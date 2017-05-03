@@ -6,7 +6,7 @@
 
 using namespace std;
 
-string solve_iterative_aux(Hanoi h){
+string solve_iterative_aux(Hanoi& h){
     ostringstream stm;
     int pasos = 0;
     
@@ -26,17 +26,18 @@ string solve_iterative_aux(Hanoi h){
         stm << h.print_towers();
     }
 
-    stm << "Pasos totales: " << pasos << ".";
+    stm << "Pasos totales: " << pasos << "." << endl << endl;
 
     return stm.str();
 }
 
-string solve_recursion_simple_aux(Hanoi h, ostringstream& stm, int pasos){    
+string solve_recursion_simple_aux(Hanoi& h, int pasos, ostringstream& stm){  
+
     ++pasos;
     h.legalMove('A', 'C');
     stm << h.print_towers();
     if (h.solved()) {
-        stm << "Pasos totales: " << pasos << ".";
+        stm << "Pasos totales: " << pasos << "." << endl << endl;
         return stm.str();
     }
     ++pasos;
@@ -49,13 +50,13 @@ string solve_recursion_simple_aux(Hanoi h, ostringstream& stm, int pasos){
     h.legalMove('B', 'C');
     stm << h.print_towers();
 
-    return solve_recursion_simple_aux(h, stm, pasos);
+    return solve_recursion_simple_aux(h, pasos, stm);
 }
 
-string solve_iterative(Hanoi h){
+string solve_iterative(Hanoi& h){
     ostringstream stm;
     stm << "Método: Iterativo" << endl
-        << "Estado de las torres al entrar: " << endl
+        << "Estado de las torres al entrar: " << endl << endl
         << h.print_towers();
 
     stm << solve_iterative_aux(h) << endl;
@@ -63,22 +64,23 @@ string solve_iterative(Hanoi h){
     return stm.str();
 }
 
-string solve_recursion_simple(Hanoi h){
+string solve_recursion_simple(Hanoi& h){
     ostringstream stm;
     stm << "Método: Recursivo Simple" << endl
-        << "Estado de las torres al entrar: " << endl
+        << "Estado de las torres al entrar: " << endl << endl
         << h.print_towers();
 
-    ostringstream bfr;
-    stm << solve_recursion_simple_aux(h, bfr, 0) << endl;
+    ostringstream buffer;
+
+    stm << solve_recursion_simple_aux(h, 0, buffer) << endl;
 
     return stm.str();
 }
 
-string solve_recursion_double(Hanoi h){
+string solve_recursion_double(Hanoi& h){
     ostringstream stm;
     stm << "Método: Recursivo Doble" << endl
-        << "Estado de las torres al entrar: " << endl
+        << "Estado de las torres al entrar: " << endl << endl
         << h.print_towers();
 
 
