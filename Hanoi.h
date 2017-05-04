@@ -29,8 +29,6 @@ class Hanoi {
           */
         std::string print_tower(const std::deque<int>& tower);
 
-        std::deque<int>& get_tower(char tower);
-
     public:
         /** Constructor. Crea las tres torres, llena la torre a con 'n' discos.
             @param NoD NÃºmero de discos.
@@ -42,7 +40,7 @@ class Hanoi {
             @param objective Torre en donde colocarlo.
             @returns Un string indicando el elemento que fue movido.
           */
-        void legalMove(char origin, char objective);
+        Hanoi legal_move(char origin, char objective);
 
        /** Resetea el sistema al estado original.
           */
@@ -53,13 +51,13 @@ class Hanoi {
           */
         bool solved() const { return C.size() == n; };
 
-        bool isLegal(const std::deque<int>& origin, const std::deque<int>& destination) const;
+        bool is_legal(const std::deque<int>& origin, const std::deque<int>& destination) const;
     
         /** Arma un string con el estado de las tres torres.
           @returns El strring con dicho estado.
           */
         std::string print_towers();
         
-        std::deque<int>& get_tower_name(char tower);
+        std::deque<int>& get_tower(char tower);
         
 };

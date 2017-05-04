@@ -21,7 +21,7 @@ void Hanoi::reset(){
     clear(C);
 }
 
-bool Hanoi::isLegal(const deque<int>& origin, const deque<int>& destination) const{
+bool Hanoi::is_legal(const deque<int>& origin, const deque<int>& destination) const{
     if (origin.empty()) return false;
     else if (destination.empty()) return true;
     else return origin.back() < destination.back();
@@ -32,14 +32,16 @@ void Hanoi::move(deque<int>& origin, deque<int>& objective){
     origin.pop_back();
 }
 
-void Hanoi::legalMove(char origin_c, char objective_c){
+Hanoi Hanoi::legal_move(char origin_c, char objective_c){
     deque<int>& origin = get_tower(origin_c),& objective = get_tower(objective_c);
 
-    if (isLegal(origin, objective)){
+    if (is_legal(origin, objective)){
         move(origin, objective);
-    } else if (isLegal(objective, origin)){
+    } else if (is_legal(objective, origin)){
         move(objective, origin);
     }
+
+    return *this;
 }
 
 string Hanoi::print_towers(){
@@ -65,24 +67,6 @@ string Hanoi::print_tower(const deque<int>& tower) {
 }
 
 deque<int>& Hanoi::get_tower(char tower){
-	
-	
-    switch(tower){
-        case 'A':
-            return A;
-            break;
-        case 'B':
-            return B;
-            break;
-        case 'C':
-            return C;
-            break;
-    }
-}
-
-deque<int>& Hanoi::get_tower_name(char tower){
-	
-	
     switch(tower){
         case 'A':
             return A;

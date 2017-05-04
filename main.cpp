@@ -12,17 +12,17 @@ string solve_iterative_aux(Hanoi& h){
     
     while (true){
         ++pasos;
-        h.legalMove('A', 'C');
+        h.legal_move('A', 'C');
         stm << h.print_towers();
         if (h.solved()) break;
         ++pasos;
-        h.legalMove('A', 'B');
+        h.legal_move('A', 'B');
         stm << h.print_towers();
         ++pasos;
-        h.legalMove('C', 'A');
+        h.legal_move('C', 'A');
         stm << h.print_towers();
         ++pasos;
-        h.legalMove('B', 'C');
+        h.legal_move('B', 'C');
         stm << h.print_towers();
     }
 
@@ -34,20 +34,20 @@ string solve_iterative_aux(Hanoi& h){
 string solve_recursion_simple_aux(Hanoi& h, int pasos, ostringstream& stm){  
 
     ++pasos;
-    h.legalMove('A', 'C');
+    h.legal_move('A', 'C');
     stm << h.print_towers();
     if (h.solved()) {
         stm << "Pasos totales: " << pasos << "." << endl << endl;
         return stm.str();
     }
     ++pasos;
-    h.legalMove('A', 'B');
+    h.legal_move('A', 'B');
     stm << h.print_towers();
     ++pasos;
-    h.legalMove('C', 'A');
+    h.legal_move('C', 'A');
     stm << h.print_towers();
     ++pasos;
-    h.legalMove('B', 'C');
+    h.legal_move('B', 'C');
     stm << h.print_towers();
 
     return solve_recursion_simple_aux(h, pasos, stm);
@@ -90,7 +90,7 @@ string solve_recursion_double(Hanoi& h){
     return stm.str();
 }
 
-string solve_recursion_double_aux(Hanoi& h, int steps, ostringstream& stm){
+string solve_recursion_double_aux(Hanoi h, int steps, ostringstream& stm){
 	
 	// Incremento de pasos
 	steps++;
@@ -101,17 +101,14 @@ string solve_recursion_double_aux(Hanoi& h, int steps, ostringstream& stm){
         return stm.str();
     }
     
-    /*Sino hay 4 posibles casos de movimiento: De A a B, B a C, C a B, B a A. Por lo que depende del No de paso en el cual se encuentre
+    /*Soloo hay 4 posibles casos de movimiento: De A a B, B a C, C a B, B a A. Por lo que depende del No de paso en el cual se encuentre
     la ejecución del programa. */
-	if(h.isLegal(h.get_tower_name('A'),h.get_tower_name('B')) || h.isLegal(h.get_tower_name('B'),h.get_tower_name('A'))) {
-		h.legalMove('A','B');
-		stm << h.print_towers();
-		return solve_recursion_double_aux(h,steps,stm);
+    stm << h.print_towers();
+	if(h.is_legal(h.get_tower('A'),h.get_tower('B')) || h.is_legal(h.get_tower('B'),h.get_tower('A'))) {
+		return solve_recursion_double_aux(h.legal_move('A','B'), steps, stm);
 		}
-	else if (h.isLegal(h.get_tower_name('B'),h.get_tower_name('C')) || h.isLegal(h.get_tower_name('C'),h.get_tower_name('B'))) {
-		h.legalMove('B','C');
-		stm << h.print_towers();
-		return solve_recursion_double_aux(h,steps,stm);
+	else if (h.is_legal(h.get_tower('B'),h.get_tower('C')) || h.is_legal(h.get_tower('C'),h.get_tower('B'))) {
+		return solve_recursion_double_aux(h.legal_move('B','C'), steps, stm);
 	}
 }
 
