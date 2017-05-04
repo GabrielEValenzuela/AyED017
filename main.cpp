@@ -115,9 +115,12 @@ string solve_recursion_double_aux(Hanoi h, int steps, ostringstream& stm){
 int main(){
     ofstream log_file("Hanoi_log.txt");
 
-    int n;
-    cout << "Introduzca el numero de discos: ";
-    cin >> n;
+    int n = 0;
+    while (n <= 0 ){
+        cout << "Introduzca el numero de discos: ";
+        cin >> n;
+        cout << endl;
+    }
 
     Hanoi h(n);
 	
