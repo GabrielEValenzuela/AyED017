@@ -82,9 +82,37 @@ string solve_recursion_double(Hanoi& h){
     stm << "Método: Recursivo Doble" << endl
         << "Estado de las torres al entrar: " << endl << endl
         << h.print_towers();
+		
+	ostringstream buffer_double;
 
+    stm << solve_recursion_simple_aux(h, 0, buffer_double) << endl;
 
     return stm.str();
+}
+
+string solve_recursion_double_aux(Hanoi& h, int steps, ostringstream& stm){
+	
+	// Incremento de pasos
+	steps++;
+	//Si está resuelto el problema, devuelve el string para el archivo
+	
+	 if (h.solved()) {
+        stm << "Pasos totales: " << steps << "." << endl << endl;
+        return stm.str();
+    }
+    
+    /*Sino hay 4 posibles casos de movimiento: De A a B, B a C, C a B, B a A. Por lo que depende del No de paso en el cual se encuentre
+    la ejecución del programa. */
+	if(h.isLegal(h.get_tower_name('A'),h.get_tower_name('B')) || h.isLegal(h.get_tower_name('B'),h.get_tower_name('A'))) {
+		h.legalMove('A','B');
+		stm << h.print_towers();
+		return solve_recursion_double_aux(h,steps,stm);
+		}
+	else if (h.isLegal(h.get_tower_name('B'),h.get_tower_name('C')) || h.isLegal(h.get_tower_name('C'),h.get_tower_name('B'))) {
+		h.legalMove('B','C');
+		stm << h.print_towers();
+		return solve_recursion_double_aux(h,steps,stm);
+	}
 }
 
 int main(){
@@ -95,15 +123,25 @@ int main(){
     cin >> n;
 
     Hanoi h(n);
-
+	
+	log_file << "Resolución de las Torres de Hanoi (Édouard Lucas --- 1863)\n\n";
+	log_file << " _|_    |     |  \n";
+	log_file << "__|__   |     |  \n";
+	log_file << "===== ===== =====\n";
+	log_file << "  A     B     C  \n\n";
     log_file << solve_recursion_simple(h);
 
     h.reset();
     log_file << solve_iterative(h);
 
-    //h.reset();
-    //log_file << solve_recursion_double(h);
-
+    h.reset();
+    log_file << solve_recursion_double(h);
+    
+    log_file << "  |     |    _|_\n";
+	log_file << "  |     |   __|__\n";
+	log_file << "===== ===== =====\n";
+	log_file << "  A     B     C  \n\n";
+    
     log_file.close();
 
     return 0;

@@ -65,6 +65,24 @@ string Hanoi::print_tower(const deque<int>& tower) {
 }
 
 deque<int>& Hanoi::get_tower(char tower){
+	
+	
+    switch(tower){
+        case 'A':
+            return A;
+            break;
+        case 'B':
+            return B;
+            break;
+        case 'C':
+            return C;
+            break;
+    }
+}
+
+deque<int>& Hanoi::get_tower_name(char tower){
+	
+	
     switch(tower){
         case 'A':
             return A;

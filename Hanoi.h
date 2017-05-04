@@ -33,11 +33,11 @@ class Hanoi {
 
     public:
         /** Constructor. Crea las tres torres, llena la torre a con 'n' discos.
-            @param NoD Número de discos.
+            @param NoD NÃºmero de discos.
           */
         Hanoi(int NoD): n(NoD) { reset(); };
 
-        /** Mueve el disco superior entre una torre y otra én la direccion que sea legal.
+        /** Mueve el disco superior entre una torre y otra Ã©n la direccion que sea legal.
             @param origin Torre de donde sacar el disco.
             @param objective Torre en donde colocarlo.
             @returns Un string indicando el elemento que fue movido.
@@ -49,7 +49,7 @@ class Hanoi {
         void reset();
     
         /** Estado del sistema.
-            @return true si el sistema está resuelto.
+            @return true si el sistema estÃ¡ resuelto.
           */
         bool solved() const { return C.size() == n; };
 
@@ -59,4 +59,7 @@ class Hanoi {
           @returns El strring con dicho estado.
           */
         std::string print_towers();
+        
+        std::deque<int>& get_tower_name(char tower);
+        
 };
