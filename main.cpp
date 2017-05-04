@@ -144,5 +144,7 @@ int main(){
     
     log_file.close();
 
+    cout << "Problema resuelto. Log guardado en: Hanoi_log.txt" << endl;
+
     return 0;
 }

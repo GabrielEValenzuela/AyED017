@@ -32,7 +32,7 @@ void Hanoi::move(deque<int>& origin, deque<int>& objective){
     origin.pop_back();
 }
 
-Hanoi Hanoi::legal_move(char origin_c, char objective_c){
+Hanoi& Hanoi::legal_move(char origin_c, char objective_c){
     deque<int>& origin = get_tower(origin_c),& objective = get_tower(objective_c);
 
     if (is_legal(origin, objective)){

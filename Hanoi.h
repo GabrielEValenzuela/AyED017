@@ -40,7 +40,7 @@ class Hanoi {
             @param objective Torre en donde colocarlo.
             @returns Un string indicando el elemento que fue movido.
           */
-        Hanoi legal_move(char origin, char objective);
+        Hanoi& legal_move(char origin, char objective);
 
        /** Resetea el sistema al estado original.
           */
