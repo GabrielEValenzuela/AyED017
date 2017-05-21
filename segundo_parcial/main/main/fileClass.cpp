@@ -7,7 +7,7 @@
 #include "fileClass.h"
 
 using std::fstream;		using std::string;
-using std::exception;
+using std::exception;	using std::invalid_argument;
 
 fstream& fileClass::openFile(string filename) {
 	fstream file;
