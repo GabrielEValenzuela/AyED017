@@ -2,46 +2,16 @@
 #define FILECLASS_H
 #include <string>
 
-using namespace std;
-
-class fileClass
-{
+class fileClass {
 public:
-	/*
-		Constructor de la clase file
-		@param: Vacío
-	*/
-	fileClass();
+	/* Constructor de la clase file	*/
+	fileClass() {};
+	// ~fileClass();
 
-
-	/*
-		openFile: Abre un archivo de acuerdo al nombre y extensión especificada
-		@param: Nombre del archivo dot extensión
+	/* openFile: Abre un archivo de acuerdo al nombre y extensiÃ³n especificada
+	   @param: Nombre del archivo dot extensiÃ³n
 	*/
 	string openFile(string filename);
-
-
-	/*
-		Crea un archivo biario con el nombre especificado
-		@param: Nombre del archivo
-	*/
-	void createBinaryFile(string filename);
-
-
-	/*
-	Crea un archivo biario con el nombre especificado
-	@param: Nombre del archivo
-	*/
-
-
-	void createTextFile(string filename);
-
-
-	/*
-		Destructor
-		@Param: Vacío
-	*/
-	~fileClass();
 };
 
 #endif
