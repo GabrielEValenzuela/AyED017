@@ -1,0 +1,13 @@
+The new record contains six more characters than the original record.
+Therefore, the characters beyond the second 'o' in 'Worthington' would
+overwrite the beginning of the next sequential record in the file.
+The problem is that, in the formatted input/output model using the stream
+insertion operator << and the stream extraction operator >>, fields—and hence
+records—can vary in size. For example, values 7, 14, –117, 2074, and 27383 are all ints,
+which store the same number of “raw data” bytes internally (typically four bytes on32-bit
+machines and eight bytes on 64-bit machines).However, these integers become different sized fields,
+depending on their actual values, when output as formatted text (character sequences).
+Therefore, the formatted input/output model usually is not used to update records in place.
+
+
+Sections 14.6–14.10 show how to perform in-place updates with fixed-length records.Sections 14.6–14.10 show how to perform in-place updates with fixed-length records.
