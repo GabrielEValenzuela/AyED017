@@ -9,7 +9,11 @@ namespace structures {
     	// TODO: implement
     }
 
-    void Tree::increment_reps() {
+    int Tree::has() {
+    	// TODO: implement
+    }
+
+    void Tree::increment_reps(string word) {
     	// TODO: implement
     }
 
