@@ -1,3 +1,4 @@
+#include <sstream>
 #include <string>
 
 namespace estructures {
@@ -8,31 +9,27 @@ namespace estructures {
         Node* right;
     };
 
-    class Tree {
+    class BinaryTree {
         private:
             Node* root;
+            Node* _find(Node& node, std::string word);
+            int _get_height(Node& node);
+            void _node_add(Node& node, std::string word);
 
         public:
-            Tree() { root = NULL; };
+            BinaryTree() { root = NULL; };
             // ~Tree();
-        /*
-            Funciones virtuales puras
-        */
-            virtual void node_delete(std::string word) = 0; //Añadi el virtual
-            virtual void node_add(std::string word) = 0; //Añadi el virtual
+            void node_delete(std::string word);
+            void node_add(std::string word);
+            void node_delete(std::string word);
+            void node_add(std::string word);
             void increment_reps(std::string word);
             int get_height();
             bool has(std::string word);
+            Node* find(std::string word);
     };
     
-    class TreeBinary: public Tree {
-        private:
-        public:
-            void node_add(std::string word);
-            void node_delete(std::string word);
-    };
-    
-    class TreeAVL: public Tree {
+    class TreeAVL: public BinaryTree {
         private:
         public:
             void node_add(std::string word);
@@ -42,6 +39,7 @@ namespace estructures {
     class List {
         private:
             Node* start;
+            std::string _to_string(Node& node, std::ostringstream stm);
 
         public:
             List() { start = NULL };
