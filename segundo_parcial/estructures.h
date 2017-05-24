@@ -9,7 +9,7 @@ namespace estructures {
         Node* right;
     };
 
-    class Tree {
+    class BinaryTree {
         private:
             Node* root;
             Node* _find(Node& node, std::string word);
@@ -19,6 +19,8 @@ namespace estructures {
         public:
             BinaryTree() { root = NULL; };
             // ~Tree();
+            void node_delete(std::string word);
+            void node_add(std::string word);
             void node_delete(std::string word);
             void node_add(std::string word);
             void increment_reps(std::string word);
