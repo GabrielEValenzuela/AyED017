@@ -15,8 +15,11 @@ namespace estructures {
         public:
             Tree() { root = NULL; };
             // ~Tree();
-            void node_delete(std::string word) = 0;
-            void node_add(std::string word) = 0;
+        /*
+            Funciones virtuales puras
+        */
+            virtual void node_delete(std::string word) = 0; //Añadi el virtual
+            virtual void node_add(std::string word) = 0; //Añadi el virtual
             void increment_reps(std::string word);
             int get_height();
             bool has(std::string word);
