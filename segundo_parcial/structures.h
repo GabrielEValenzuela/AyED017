@@ -42,10 +42,11 @@ namespace structures {
             Node start;
             std::string _to_string(Node& node, std::ostringstream& stm);
             void _sort_insertion(Node& sorted, Node& to_sort);
+            Node* _list_from_tree(Node& root);
 
         public:
             List() { start = NULL; };
-            List(Node& node) { start = node; };
+            List(Node& node) { start = _list_from_tree(node); };
             void sort_insertion();
             void sort_heap();
             std::string to_string();

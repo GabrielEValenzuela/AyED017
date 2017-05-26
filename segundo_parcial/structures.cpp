@@ -89,6 +89,28 @@ namespace structures {
     	return;
     }
 
+    Node* List::_list_from_tree(Node* root) {
+        if (root == NULL) return root;
+
+        if (root->left != NULL) {
+            Node* left = _list_from_tree(start, root->left);
+            
+            while (left->right != NULL) left = left->right;
+            left->right = root;
+            root->left = left;
+        }
+
+        if (root->right != NULL) {
+            Node* right = _list_from_tree(start, root->right);
+            
+            while (right->left != NULL) right = right->left;
+            right->left = root;
+            root->right = right;
+        }
+
+        return root;
+    }
+
     void List::_sort_insertion(Node& sorted, Node& to_sort) {
     	if (to_sort == NULL) return;
 
@@ -116,6 +138,7 @@ namespace structures {
     				to_sort->left = NULL;
     				to_sort->right = sorted;
     				start = to_sort;
+                    // salgo del loop
     				break;
     			} else {
     				sorted = sorted->left;
