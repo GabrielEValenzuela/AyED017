@@ -58,37 +58,7 @@ namespace structures {
     	_node_add(root, word);
     }
 
-    void BinaryTree::_del(Node& root) {
-    	if (root->right != NULL) _del(root->right);
-    	else {
-    		Node tmp = root;
-    		root = root->left;
-    	}
-    }
-
-    void BinaryTree::_delete(Node& root, string word) {
-    	if (word < root->word) _delete(root->left, word);
-    	else if (word > root->word) _delete(root->right, word);
-    	else {
-    		Node tmp = root;
-    		if (tmp->right == NULL) root = tmp->left;
-    		else if (tmp->left == NULL) root = tmp->right;
-    		else _del(tmp->left);
-    		delete tmp;
-    	}
-    }
-
-    void BinaryTree::node_delete(string word) {
-    	if (!has(word)) return;
-
-    	_delete(root, word);
-    }
-
     void TreeAVL::node_add(string word) {
-    	return;
-    }
-
-    void TreeAVL::node_delete(string word) {
     	return;
     }
 

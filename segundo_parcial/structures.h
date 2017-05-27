@@ -19,14 +19,11 @@ namespace structures {
             Node _find(Node& node, std::string word);
             int _get_height(Node& node);
             void _node_add(Node& node, std::string word);
-            void _delete(Node& node, std::string word);
-            void _del(Node& node);
             int count(Node& node);
 
         public:
             BinaryTree() { root = NULL; };
             // ~Tree();
-            void node_delete(std::string word);
             void node_add(std::string word);
             void increment_reps(std::string word);
             int get_height();
@@ -40,7 +37,6 @@ namespace structures {
         private:
         public:
             void node_add(std::string word);
-            void node_delete(std::string word);
     };
     
     class List {
