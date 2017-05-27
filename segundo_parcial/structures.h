@@ -1,5 +1,6 @@
 #include <sstream>
 #include <string>
+#include <vector>
 
 namespace structures {
     struct sNode {
@@ -7,6 +8,8 @@ namespace structures {
         int repetitions;
         sNode* left;
         sNode* right;
+        void set_right(sNode* new_node) { right = new_node; };
+        void set_left(sNode* new_node) { right = new_node; };
     };
     typedef sNode* Node;
 
@@ -18,6 +21,7 @@ namespace structures {
             void _node_add(Node& node, std::string word);
             void _delete(Node& node, std::string word);
             void _del(Node& node);
+            int count(Node& node);
 
         public:
             BinaryTree() { root = NULL; };
@@ -26,8 +30,10 @@ namespace structures {
             void node_add(std::string word);
             void increment_reps(std::string word);
             int get_height();
+            Node& get_root() { return root; }
             bool has(std::string word);
             Node find(std::string word);
+            int get_amount_of_nodes();
     };
     
     class TreeAVL: public BinaryTree {
@@ -39,14 +45,13 @@ namespace structures {
     
     class List {
         private:
-            Node start;
-            std::string _to_string(Node& node, std::ostringstream& stm);
-            void _sort_insertion(Node& sorted, Node& to_sort);
-            Node* _list_from_tree(Node& root);
+            std::vector<Node> lista;
+            int _ird(Node& node);
 
         public:
-            List() { start = NULL; };
-            List(Node& node) { start = _list_from_tree(node); };
+            List() {};
+            void add(Node& node);
+            void from_tree(Node& node) { _ird(node); };
             void sort_insertion();
             void sort_heap();
             std::string to_string();

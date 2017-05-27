@@ -1,10 +1,13 @@
+#include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "structures.h"
 
 using std::string;	using std::ostringstream;
 using std::max;		using std::endl;
+using std::vector;
 
 namespace structures {
 	int BinaryTree::_get_height(Node& node) {
@@ -89,83 +92,42 @@ namespace structures {
     	return;
     }
 
-    Node* List::_list_from_tree(Node* root) {
-        if (root == NULL) return root;
-
-        if (root->left != NULL) {
-            Node* left = _list_from_tree(start, root->left);
-            
-            while (left->right != NULL) left = left->right;
-            left->right = root;
-            root->left = left;
+    int List::_ird(Node& node) {
+        if (node!=NULL) {
+            _ird(node->left);
+            lista.push_back(node);
+            _ird(node->right);
         }
-
-        if (root->right != NULL) {
-            Node* right = _list_from_tree(start, root->right);
-            
-            while (right->left != NULL) right = right->left;
-            right->left = root;
-            root->right = right;
-        }
-
-        return root;
-    }
-
-    void List::_sort_insertion(Node& sorted, Node& to_sort) {
-    	if (to_sort == NULL) return;
-
-    	// guardo una referencia al proximo a ordenar
-    	Node& next_to_sort = to_sort->right;
-
-    	// saco a to_sort de la lista
-    	sorted->right = to_sort->right;
-    	to_sort->right->left = sorted;
-
-    	//inserto a to_sort donde corresponda
-    	while (true) {
-    		// inserto to_sort después del primero mayor o igual que encuentre
-    		if (sorted->repetitions >= to_sort->repetitions) {
-    			sorted->right->left = to_sort;
-    			to_sort->right = sorted->right->left;
-    			sorted->right = to_sort;
-    			to_sort->left = sorted;
-    			// salgo del loop
-    			break;
-    		} else {
-    			// si llegue al principio de la lista
-    			if (sorted->left == NULL) {
-    				sorted->left = to_sort;
-    				to_sort->left = NULL;
-    				to_sort->right = sorted;
-    				start = to_sort;
-                    // salgo del loop
-    				break;
-    			} else {
-    				sorted = sorted->left;
-    			}
-    		}
-    	}
-
-    	// llamo recursivamente sobre el resto de la lista
-    	_sort_insertion(next_to_sort->left, next_to_sort);
     }
 
     void List::sort_insertion() {
-    	_sort_insertion(start, start->right);
+        int i,j, comp;
+        Node di;
+        for (int i = 1; i < lista.size(); i++){
+            j = i-1; 
+            di = lista[i]; 
+            comp++;
+            while(di->repetitions < lista[j]->repetitions && j >= 0){
+                lista[j+1] = lista[j];
+                comp++;
+                j--;
+            }
+            lista[j+1] = di;
+        }
     }
 
     void List::sort_heap() {
     	return;
     }
 
-    string List::_to_string(Node& node, ostringstream& stm) {
-    	if (node == NULL) return stm.str();
-    	stm << node->word << endl;
-    	return _to_string(node->right, stm);
-    }
-
     string List::to_string() {
-    	ostringstream stm;
-    	return _to_string(start, stm);
+    	vector<Node>::reverse_iterator iter;
+        ostringstream stm;
+        
+        for (iter = lista.rbegin(); iter != lista.rend(); iter++) {
+            stm << (*iter)->word << " " << (*iter)->repetitions << endl;    
+        }
+
+        return stm.str();
     }
 }
