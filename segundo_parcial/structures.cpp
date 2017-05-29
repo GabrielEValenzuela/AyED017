@@ -138,6 +138,8 @@ namespace structures {
 				} else break;
 			}
 		}
+
+		std::cout << "Cantidad de comparaciones (insertion sort): " << comp << endl;
 	}
 
 	void List::sort_heap() {
@@ -155,7 +157,10 @@ namespace structures {
 			}
 			else {
 				size--;
-				if (size == 0) { return; }
+				if (size == 0) { 
+					std::cout << "Cantidad de comparaciones (heap sort): " << comp << endl; 
+					return;
+				}
 				di = lista[size];
 				lista[size] = lista[0];
 			}
@@ -179,7 +184,8 @@ namespace structures {
 
 			lista[index] = di;
 		}
-		return;
+		
+		std::cout << "Cantidad de comparaciones (heap sort): " << comp << endl;
 	}
 
 	string List::to_string() {
