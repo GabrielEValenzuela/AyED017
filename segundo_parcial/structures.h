@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <sstream>
 #include <string>
 #include <vector>
@@ -16,7 +16,7 @@ namespace structures {
 	typedef sNode* Node;
 
 	class BinaryTree {
-	private:
+	protected:
 		Node root;
 		Node _find(Node& node, std::string word);
 		int _get_height(Node& node);
@@ -38,11 +38,14 @@ namespace structures {
 
 class TreeAVL : public BinaryTree {
 	private:
+		void _check_balance(Node& root);
+		void _balance(Node& root);
+		void _single_left_rotation(Node& root);
+		void _single_right_rotation(Node& root);
+		void _double_left_rotation(Node& root);
+		void _double_right_rotation(Node& root);
 	public:
 		void node_add(std::string word);
-		void right_rotate(Node& node_left, Node& node_right);
-		void left_rotate(Node& node_left, Node& node_right);
-		int get_balance();
 };
 
 	class List {

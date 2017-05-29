@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -60,8 +60,61 @@ namespace structures {
 		_node_add(root, word);
 	}
 
+	void TreeAVL::_single_left_rotation(Node& root) {
+		Node tmp = root;
+		root = root->left;
+		root->right = tmp;
+	}
+
+	void TreeAVL::_double_left_rotation(Node& root) {
+		Node tmp = root->left;
+		root->left = root->left->right;
+		root->left->left = tmp;
+		_single_left_rotation(root);
+	}
+
+	void TreeAVL::_single_right_rotation(Node& root) {
+		Node tmp = root;
+		root = root->right;
+		root->left = tmp;
+	}
+	void TreeAVL::_double_right_rotation(Node& root) {
+		Node tmp = root->right;
+		root->right = root->right->left;
+		root->right->right = tmp;
+	}
+
+	void TreeAVL::_balance(Node& root) {
+		int balance = BinaryTree::_get_height(root->left) - BinaryTree::_get_height(root->right);
+
+		if (balance == 2) {
+			 if (BinaryTree::_get_height(root->left) != 0) _single_right_rotation(root);
+			 else _double_right_rotation(root);
+		} else if (balance == -2) {
+			if (BinaryTree::_get_height(root->right) != 0) _single_left_rotation(root);
+			 else _double_left_rotation(root);
+		}
+
+		if (balance > 2)
+			_balance(root->left);
+		else if (balance < -2) 
+			_balance(root->right);
+	}
+
+	void TreeAVL::_check_balance(Node& root) {
+		int balance = BinaryTree::_get_height(root->left) - BinaryTree::_get_height(root->right);
+		bool is_balanced = abs(balance) > 1;
+
+		if (!is_balanced) {
+			_balance(root);
+		}
+
+	}
+
 	void TreeAVL::node_add(string word) {
-		return;
+		BinaryTree::node_add(word);
+
+		_check_balance(root);
 	}
 
 	void List::_ird(Node& node) {
@@ -73,21 +126,20 @@ namespace structures {
 	}
 
 void List::sort_insertion() {
-	if (lista.size() == 0) { return; }
-		int i, j, comp;
-		Node di;
-		for (int i = 1; i < lista.size(); i++) {
-			j = i - 1;
-			di = lista[i];
-			comp++;
-			while (di->repetitions < lista[j]->repetitions && j >= 0) {
-				lista[j + 1] = lista[j];
+	if (lista.size() == 0) return;
+	int comp;
+	for (int i = 1; i < lista.size(); i++) {
+		comp++;
+		for (int j = i; j > 0; j--) {
+			if (lista[j] < lista[j-1]) {
 				comp++;
-				j--;
-			}
-			lista[j + 1] = di;
+				Node tmp = lista[j];
+				lista[j] = lista[i];
+				lista[i] = tmp;
+			} else break;
 		}
 	}
+}
 
 	void List::sort_heap() {
 		if (lista.size() == 0) { return; }
