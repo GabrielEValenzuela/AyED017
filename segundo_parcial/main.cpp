@@ -167,7 +167,7 @@ _structure_options:
 			_iterative_method(file, _Btree);
 			break;
 		case 'r':
-			//_recursive_method();
+			_recursive_method(file,_Btree);
 			break;
 		case 'a':
 			//avl_method();
@@ -247,5 +247,14 @@ void _iterative_method(fstream& file, structures::BinaryTree& _Btree) {
 }
 //*********************************************************//
 void _recursive_method(fstream& file, structures::BinaryTree& _Btree) {
-	return;
+	string str;
+	if (cin >> str)
+	{
+		_to_lower_case(str);
+		if (_Btree.has(str)) {
+			_Btree.increment_reps(str);
+		}
+		_Btree.node_add(str);
+		_recursive_method(file, _Btree);
+	}
 }
