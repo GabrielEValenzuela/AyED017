@@ -125,48 +125,47 @@ namespace structures {
 		}
 	}
 
-void List::sort_insertion() {
-	if (lista.size() == 0) return;
-	int comp;
-	for (int i = 1; i < lista.size(); i++) {
-		comp++;
-		for (int j = i; j > 0; j--) {
-			if (lista[j] < lista[j-1]) {
-				comp++;
-				Node tmp = lista[j];
-				lista[j] = lista[i];
-				lista[i] = tmp;
-			} else break;
+	void List::sort_insertion() {
+		// if (lista.size() == 0) return;
+		int comp = 0;
+		for (int i = 1; i < lista.size(); i++) {
+			for (int j = i; j > 0; j--) {
+				if (lista[j]->repetitions > lista[j-1]->repetitions) {
+					comp++;
+					Node tmp = lista[j];
+					lista[j] = lista[j-1];
+					lista[j-1] = tmp;
+				} else break;
+			}
 		}
 	}
-}
 
 	void List::sort_heap() {
 		if (lista.size() == 0) { return; }
-		int index, child,comp;
+		int comp = 0;
+		int index, child;
+		int heap_size = lista.size() / 2, size = lista.size();
 		Node di;
-		int _heap_size = lista.size() / 2;
-		int _size = lista.size();
 
 		while (true) {
 
-			if (_heap_size > 0) {
-				di = lista[--_heap_size];
+			if (heap_size > 0) {
+				di = lista[--heap_size];
 				comp++;
 			}
 			else {
-				_size--;
-				if (_size == 0) { return; }
-				di = lista[_size];
-				lista[_size] = lista[0];
+				size--;
+				if (size == 0) { return; }
+				di = lista[size];
+				lista[size] = lista[0];
 			}
 
-			index = _heap_size;
+			index = heap_size;
 			child = index * 2 + 1;
 
-			while (child < _size) {
+			while (child < size) {
 				comp++;
-				if (child + 1 < _size && lista[child + 1] > lista[child]) {
+				if (child + 1 < size && lista[child + 1] > lista[child]) {
 					child++;
 				}
 				comp++;
@@ -184,10 +183,10 @@ void List::sort_insertion() {
 	}
 
 	string List::to_string() {
-		vector<Node>::reverse_iterator iter;
+		vector<Node>::iterator iter;
 		ostringstream stm;
 
-		for (iter = lista.rbegin(); iter != lista.rend(); iter++) {
+		for (iter = lista.begin(); iter != lista.end(); iter++) {
 			stm << (*iter)->word << " " << (*iter)->repetitions << endl;
 		}
 
