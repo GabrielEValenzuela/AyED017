@@ -82,6 +82,7 @@ namespace structures {
 		Node tmp = root->right;
 		root->right = root->right->left;
 		root->right->right = tmp;
+		_single_right_rotation(root);
 	}
 
 	void TreeAVL::_balance(Node& root) {
