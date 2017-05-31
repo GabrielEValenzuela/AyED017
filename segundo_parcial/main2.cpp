@@ -1,33 +1,37 @@
 #include <algorithm>
 #include <iostream>
-#include <iomanip>
 #include <fstream>
 #include <string>
-#include <cctype>
 
 #include "structures.h"
 
+using namespace std;
+
 // Prototypes
-char main_menu(char&);
-char structure_menu(char&);
-char sorting_menu(char&);
-char method_menu(char&);
+void main_menu(char&);
+void structure_menu(char&);
+void sorting_menu(char&);
+void method_menu(char&);
+void end_menu(char&);
+void iterative_method(ifstream&, structures::TreeAVL& tree, string tree_type);
+void recursive_method(ifstream&, structures::TreeAVL& tree, string tree_type);
 fstream _open_file(string);
 void _write_file(string, string);
 
 int main() {
-	string file_name;
-	ifstream ifile;
+	string file_name, tree_type;
+	ifstream f;
+	structures::TreeAVL tree;
 	char opt;
 
 	main_menu(opt);
 
 	switch (opt) {
 		case 'o':
-			cout << "Ingrese el nombre del archivo: "
+			cout << "Ingrese el nombre del archivo: ";
 			cin >> file_name;
 			try {
-				f = _open_file(file_name);
+				f.open(file_name.c_str());
 			} catch (std::exception &ex) {
 				cout << ex.what();
 			}
@@ -39,10 +43,10 @@ int main() {
 	structure_menu(opt);
 	switch (opt) {
 		case 'a':
-			structures::TreeAVL tree;
+			tree_type = "AVL";
 			break;
 		case 'b':
-			structures::BinaryTree tree;
+			tree_type = "BTS";
 			break;
 		case 'x':
 			return 0;
@@ -51,17 +55,14 @@ int main() {
 	method_menu(opt);
 	switch (opt) {
 		case 'i':
-			metodo_iterativo(file, tree);
+			iterative_method(f, tree ,tree_type);
 			break;
 		case 'r':
-			metodo_recursivo(file, tree);
+			recursive_method(f, tree ,tree_type);
 			break;
 		case 'x':
 			return 0;
 	}
-
-	cout << "Árbol: " << endl;
-	tree.print();
 
 	structures::List lista;
 	lista.from_tree(tree.get_root());
@@ -79,20 +80,17 @@ int main() {
 	}
 
 	string result = lista.to_string();
+	string out_file;
 
 	end_menu(opt);
 	switch (opt) {
 		case 'b':
-			cout << result << endl
-				 << "Imprimiendo a archivo. Ingrese el nombre: ";
-			string out_file;
-			cin >> out_file;
-			_write_file(out_file, result);
+			cout << result << endl;
 		case 'p':
 			cout << "Imprimiendo a archivo. Ingrese el nombre: ";
-			string out_file;
 			cin >> out_file;
 			_write_file(out_file, result);
+			break;
 		case 's':
 			cout << result << endl;
 			break;
@@ -146,23 +144,48 @@ void method_menu(char& opt) {
 	cin >> opt;
 }
 
-fstream _open_file(string filename) {
-	fstream file;
-	file.exceptions(fstream::failbit | fstream::badbit);
+void end_menu(char& opt) {
+	cout << " ----- Menu Finalizacion -----"
+		 << "Elija que hacer con el resultado: " << endl
+		 << "'s' -- Mostrar" << endl
+		 << "'p' -- Imprimir a archivo" << endl
+		 << "'b' -- Ambas" << endl
+		 << "'x' -- Salir" << endl
+		 << ">> ";
 
-	try {
-		file.open(filename, ios::in);
-		return file;
-	}
-	catch (...) {
-		throw invalid_argument("Invalid file name");
-	}
+	cin >> opt;
 }
 
 void _write_file(string filename, string content) {
-	ofstream f = _open_file(filename);
+	ofstream f;
+	f.open(filename.c_str());
 
 	f << content;
 
 	f.close();
+}
+
+void iterative_method(ifstream& f, structures::TreeAVL& tree, string tree_type) {
+	string buffer;
+	while (f >> buffer) {
+		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		if (tree.has(buffer)) tree.increment_reps(buffer);
+		else {
+			if (tree_type == "BTS") tree.structures::BinaryTree::node_add(buffer);
+			else tree.node_add(buffer);
+		}
+	}
+}
+
+void recursive_method(ifstream& f, structures::TreeAVL& tree, string tree_type) {
+	string buffer;
+	if (cin >> buffer) {
+		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		if (tree.has(buffer)) tree.increment_reps(buffer);
+		else {
+			if (tree_type == "BTS") tree.structures::BinaryTree::node_add(buffer);
+			else tree.node_add(buffer);
+		}
+		recursive_method(f, tree, tree_type);
+	}
 }
