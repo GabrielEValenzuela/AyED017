@@ -72,9 +72,11 @@ int main() {
 		case 'i':
 			cout << "Ordenando utilizando método de insercion." << endl;
 			lista.sort_insertion();
+			break;
 		case 'h':
 			cout << "Ordenando utilizando método heap." << endl;
 			lista.sort_heap();
+			break;
 		case 'x':
 			return 0;
 	}
@@ -102,7 +104,7 @@ int main() {
 }
 
 void main_menu(char& opt) {
-	cout << " ----- Menu Principal -----"
+	cout << " ----- Menu Principal -----" << endl
 		 << "Elija una opcion: " << endl
 		 << "'o' -- Abrir archivo" << endl
 		 << "'x' -- Salir" << endl
@@ -112,7 +114,7 @@ void main_menu(char& opt) {
 }
 
 void structure_menu(char& opt) {
-	cout << " ----- Menu Estructura -----"
+	cout << " ----- Menu Estructura -----" << endl
 		 << "Elija una estructura: " << endl
 		 << "'a' -- AVL" << endl
 		 << "'b' -- BTS" << endl
@@ -123,7 +125,7 @@ void structure_menu(char& opt) {
 }
 
 void sorting_menu(char& opt) {
-	cout << " ----- Menu Ordenamiento -----"
+	cout << " ----- Menu Ordenamiento -----" << endl
 		 << "Elija un metodo de ordenamiento: " << endl
 		 << "'h' -- Heap" << endl
 		 << "'i' -- Insertion" << endl
@@ -134,7 +136,7 @@ void sorting_menu(char& opt) {
 }
 
 void method_menu(char& opt) {
-	cout << " ----- Menu Metodo Llenado -----"
+	cout << " ----- Menu Metodo Llenado -----" << endl
 		 << "Elija un metodo llenado: " << endl
 		 << "'i' -- Iterativo" << endl
 		 << "'r' -- Recursivo" << endl
@@ -145,7 +147,7 @@ void method_menu(char& opt) {
 }
 
 void end_menu(char& opt) {
-	cout << " ----- Menu Finalizacion -----"
+	cout << " ----- Menu Finalizacion -----" << endl
 		 << "Elija que hacer con el resultado: " << endl
 		 << "'s' -- Mostrar" << endl
 		 << "'p' -- Imprimir a archivo" << endl
