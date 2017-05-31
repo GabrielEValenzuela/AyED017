@@ -8,10 +8,17 @@ namespace structures {
 	struct sNode {
 		std::string word;
 		int repetitions;
+		int balance_factor;
 		sNode* left;
 		sNode* right;
-		void set_right(sNode* new_node) { right = new_node; };
-		void set_left(sNode* new_node) { right = new_node; };
+		void set_right(sNode* node) { 
+			right = node;
+			balance_factor--;
+		}
+		void set_left(sNode* node) {
+			left = node;
+			balance_factor++;
+		}
 	};
 	typedef sNode* Node;
 
@@ -22,6 +29,7 @@ namespace structures {
 		int _get_height(Node& node);
 		void _node_add(Node& node, std::string word);
 		int count(Node& node);
+		void _show(Node& node, int n);
 
 	public:
 		BinaryTree() { root = NULL; };
@@ -33,17 +41,18 @@ namespace structures {
 		bool has(std::string word);
 		Node find(std::string word);
 		int get_amount_of_nodes();
+		void print() { _show(root, 0); };
 	};
 
 
 class TreeAVL : public BinaryTree {
 	private:
-		void _check_balance(Node& root);
-		void _balance(Node& root);
-		void _single_left_rotation(Node& root);
-		void _single_right_rotation(Node& root);
-		void _double_left_rotation(Node& root);
-		void _double_right_rotation(Node& root);
+		void _L_rotation(Node& root);
+		void _R_rotation(Node& root);
+		void _RL_rotation(Node& root);
+		void _LR_rotation(Node& root);
+		void _node_add(Node& node, std::string word);
+		static int _get_balance(Node& node);
 	public:
 		void node_add(std::string word);
 };

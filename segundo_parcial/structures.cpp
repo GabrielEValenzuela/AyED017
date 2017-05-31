@@ -8,8 +8,8 @@
 #include "structures.h"
 
 using std::string;	using std::ostringstream;
-using std::max;		using std::endl;
-using std::vector;
+using std::max;		using std::min;
+using std::vector;	using std::endl;
 
 namespace structures {
 	int BinaryTree::_get_height(Node& node) {
@@ -49,6 +49,7 @@ namespace structures {
 			node = new sNode;
 			node->word = word;
 			node->repetitions = 1;
+			// balance_factor = 0;
 			node->left = node->right = NULL;
 		}
 
@@ -60,62 +61,88 @@ namespace structures {
 		_node_add(root, word);
 	}
 
-	void TreeAVL::_single_left_rotation(Node& root) {
-		Node tmp = root;
-		root = root->left;
-		root->right = tmp;
+	void BinaryTree::_show(Node& node, int n) {
+		int i;
+	   	if(node!=NULL){
+			_show(node->right, n+1);
+			for(i=1; i<=n; i++) std::cout<<"     ";
+			std::cout << node->word << "(" << node->balance_factor << ")" << endl;
+			_show(node->left, n+1);
+	   		}
 	}
 
-	void TreeAVL::_double_left_rotation(Node& root) {
-		Node tmp = root->left;
-		root->left = root->left->right;
-		root->left->left = tmp;
-		_single_left_rotation(root);
+	int TreeAVL::_get_balance(Node& node) {
+		if (node == NULL) return 0;
+		else return node->balance_factor;
 	}
 
-	void TreeAVL::_single_right_rotation(Node& root) {
-		Node tmp = root;
+	void TreeAVL::_L_rotation(Node& root) {
+		Node oldroot = root;
 		root = root->right;
-		root->left = tmp;
-	}
-	void TreeAVL::_double_right_rotation(Node& root) {
-		Node tmp = root->right;
-		root->right = root->right->left;
-		root->right->right = tmp;
-		_single_right_rotation(root);
+		oldroot->right = root->left;
+		int oldfactor = _get_balance(root->left);
+		root->left = oldroot;
+
+		oldroot->balance_factor = _get_balance(oldroot->left) - oldfactor;
+		root->balance_factor = _get_balance(root->left) - _get_balance(root->right);
 	}
 
-	void TreeAVL::_balance(Node& root) {
-		int balance = BinaryTree::_get_height(root->left) - BinaryTree::_get_height(root->right);
+	void TreeAVL::_RL_rotation(Node& root) {
+		_R_rotation(root->right);
+		_L_rotation(root);
+	}
 
-		if (balance == 2) {
-			 if (BinaryTree::_get_height(root->left) != 0) _single_right_rotation(root);
-			 else _double_right_rotation(root);
-		} else if (balance == -2) {
-			if (BinaryTree::_get_height(root->right) != 0) _single_left_rotation(root);
-			 else _double_left_rotation(root);
+	void TreeAVL::_R_rotation(Node& root) {
+		Node oldroot = root;
+		root = root->left;
+		oldroot->left = root->right;
+		int oldfactor = _get_balance(root->right);
+		root->right = oldroot;
+
+		oldroot->balance_factor = oldfactor - _get_balance(oldroot->right);
+		root->balance_factor = _get_balance(root->left) - _get_balance(root->right);
+	}
+
+	void TreeAVL::_LR_rotation(Node& root) {
+		_L_rotation(root->left);
+		_R_rotation(root);
+	}
+
+	void TreeAVL::_node_add(Node& node, string word) {
+		if (node == NULL) {
+			node = new sNode;
+			node->word = word;
+			node->repetitions = 1;
+			node->balance_factor = 0;
+			node->left = node->right = NULL;
 		}
 
-		if (balance > 2)
-			_balance(root->left);
-		else if (balance < -2) 
-			_balance(root->right);
-	}
-
-	void TreeAVL::_check_balance(Node& root) {
-		int balance = BinaryTree::_get_height(root->left) - BinaryTree::_get_height(root->right);
-		bool is_balanced = abs(balance) > 1;
-
-		if (!is_balanced) {
-			_balance(root);
+		if (word < node->word) {
+			node->balance_factor++;
+			_node_add(node->left, word);
+			if (node->balance_factor == 2) {
+				if (node->left->balance_factor > 0) {
+					_R_rotation(node);
+				} else {
+					_LR_rotation(node);
+				}
+			}
 		}
-
+		if (word > node->word) {
+			node->balance_factor--;
+			_node_add(node->right, word);
+			if (node->balance_factor == -2) {
+				if (node->right->balance_factor < 0) {
+					_L_rotation(node);
+				} else {
+					_RL_rotation(node);
+				}
+			}
+		}
 	}
 
 	void TreeAVL::node_add(string word) {
-		BinaryTree::node_add(word);
-
-		_check_balance(root);
+		_node_add(root, word);
 	}
 
 	void List::_ird(Node& node) {
@@ -185,8 +212,6 @@ namespace structures {
 
 			lista[index] = di;
 		}
-		
-		std::cout << "Cantidad de comparaciones (heap sort): " << comp << endl;
 	}
 
 	string List::to_string() {
