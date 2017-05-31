@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 
@@ -57,31 +59,26 @@ int main() {
 	cout << lista2.to_string();	
 
 	cout << "---------------------------------------------" << endl;
-	cout << "Probando balance del arbol AVL" << endl;
-	structures::TreeAVL avl2;
-	
-	// nueva lista de palabras que genera un arbol desbalanceado
-	string ubuffer[] = {"a", "a", "a", "b", "a", "b", "c", "b"};
-	vector<string> ulist_of_words(ubuffer, ubuffer+8);
-	cout << "Lista de palabras creada" << endl;
-	/* el árbol sin balancear debería ser:
-		a
-		 \
-		 b
-		  \
-		  c
-	*/
+	cout << "Probando creacion de arbol desde archivo" << endl;
+	structures::TreeAVL tree;
+	ifstream f;
+	string buffer2;
 
-	for (it = ulist_of_words.begin(); it != ulist_of_words.end(); it++) {
-		if (avl2.has(*it)) avl2.increment_reps(*it);
-		else avl2.node_add(*it);
+	f.open("test.txt");
 
-		cout << endl;
-		avl2.print();
+	while (f >> buffer2) {
+		std::transform(buffer2.begin(), buffer2.end(), buffer2.begin(), ::tolower);
+		if (tree.has(buffer2)) {
+			tree.increment_reps(buffer2);
+			cout << "Aumentando: " << buffer2 << endl;
+		}
+		else {
+			tree.node_add(buffer2);
+			cout << "Agregando: " << buffer2 << endl;
+		}
 	}
 
-	avl2.print();
-
+	avl.print();
 
 	return 0;
 }
