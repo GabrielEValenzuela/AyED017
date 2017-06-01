@@ -189,6 +189,7 @@ void iterative_method(ifstream& f, structures::TreeAVL& tree) {
 	string buffer;
 	while (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		no_marks(buffer);
 		tree.insert(buffer);
 	}
 }
@@ -197,6 +198,7 @@ void iterative_method(ifstream& f, structures::BinaryTree& tree) {
 	string buffer;
 	while (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		no_marks(buffer);
 		tree.insert(buffer);
 	}
 }
@@ -205,6 +207,7 @@ void recursive_method(ifstream& f, structures::TreeAVL& tree) {
 	string buffer;
 	if (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		no_marks(buffer);
 		tree.insert(buffer);
 		recursive_method(f, tree);
 	}
@@ -214,6 +217,7 @@ void recursive_method(ifstream& f, structures::BinaryTree& tree) {
 	string buffer;
 	if (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		no_marks(buffer);
 		tree.insert(buffer);
 		recursive_method(f, tree);
 	}
