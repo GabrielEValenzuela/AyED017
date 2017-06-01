@@ -1,4 +1,10 @@
-#include "stdafx.h" //NO BORRAR
+/*
+Autor: Benitez, Jeremías
+Autor: Valenzuela, Gabriel
+Date: 06/01/17
+*/
+
+#include "stdafx.h"
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -19,39 +25,29 @@ void iterative_method(ifstream&, structures::TreeAVL& tree, string tree_type);
 void recursive_method(ifstream&, structures::TreeAVL& tree, string tree_type);
 fstream _open_file(string);
 void _write_file(string, string);
-void no_puntuations_marks(string &);
+void no_marks(string&);
+bool is_a_mark(char);
 //
-const string MARKS = ".;:;()[]{}<>";
+const string MARKS = ".,;:;()[]{}<>";
 //
-
 int main() {
 	string file_name, tree_type;
 	ifstream f;
 	structures::TreeAVL tree;
 	char opt;
 
-	string s1 = ".Prueba.";
-	string s2 = "<>.Prueba;2.<>";
-
-	cout << s1 << "  " << "  " << s2 << endl;
-	cout << "Llamo a metodo no..." << endl;
-	no_puntuations_marks(s1);
-	no_puntuations_marks(s2);
-	cout << s1 << "  " << "  " << s2 << endl;
-
-
 	main_menu(opt);
 
 	switch (opt) {
 	case 'o':
-		cout << "Ingrese el nombre del archivo: ";
-		cin >> file_name;
-		try {
-			f.open(file_name.c_str());
-		}
-		catch (std::exception &ex) {
-			cout << ex.what();
-		}
+			cout << "Ingrese el nombre del archivo: ";
+			cin >> file_name;
+			try {
+				f.open(file_name.c_str());
+			}
+			catch (std::exception &ex) {
+				cout << ex.what();
+			}
 		break;
 	case 'x':
 		return 0;
@@ -191,6 +187,7 @@ void iterative_method(ifstream& f, structures::TreeAVL& tree, string tree_type) 
 	string buffer;
 	while (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		no_marks(buffer);
 		if (tree.has(buffer)) tree.increment_reps(buffer);
 		else {
 			if (tree_type == "BTS") tree.structures::BinaryTree::node_add(buffer);
@@ -203,6 +200,7 @@ void recursive_method(ifstream& f, structures::TreeAVL& tree, string tree_type) 
 	string buffer;
 	if (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+		no_marks(buffer);
 		if (tree.has(buffer)) tree.increment_reps(buffer);
 		else {
 			if (tree_type == "BTS") tree.structures::BinaryTree::node_add(buffer);
@@ -212,24 +210,20 @@ void recursive_method(ifstream& f, structures::TreeAVL& tree, string tree_type) 
 	}
 }
 
-bool is_puntuations(char ch) {
+bool is_a_mark(char ch) {
 	return MARKS.find(ch) != string::npos;
 }
 
-void no_puntuations_marks(string& str) {
+void no_marks(string &str) {
+	
+	if (str.length() == 0) { return; }
 
-	std::ostringstream buffer;
-
-	string::const_iterator iter = str.begin();
-	char next_ch = *iter;
-		while (iter != str.end())
-		{
-			if (is_puntuations(next_ch)==false)
-			{
-				buffer.put(next_ch);
-				iter++;
-			}
-		}
-
-		str = buffer.str();
+	if (is_a_mark(str[0]) && is_a_mark(str[str.length()-1])) {
+		str.erase(0, 1);
+		str.erase(str.length() - 1, 1);
 	}
+
+	if (is_a_mark(str[0])) { str.erase(0, 1);}
+
+	if (is_a_mark(str[str.length() - 1])) { str.erase(str.length() - 1,1);}
+}
