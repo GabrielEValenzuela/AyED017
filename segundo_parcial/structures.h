@@ -1,3 +1,4 @@
+//#include "stdafx.h"
 #include <sstream>
 #include <string>
 #include <vector>
@@ -18,7 +19,7 @@ namespace structures {
 		Node root;
 		Node _find(Node& node, std::string word);
 		static int _get_height(Node& node);
-		Node _insert(Node& node, std::string word);
+		void _insert(Node& node, std::string word);
 		void _show(Node& node, int n);
 
 	public:
@@ -55,4 +56,3 @@ class TreeAVL : public BinaryTree {
 		std::string to_string();
 	};
 }
-
