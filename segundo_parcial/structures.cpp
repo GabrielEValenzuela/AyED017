@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+#include "stdafx.h" //NO BORRAR
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -63,12 +63,12 @@ namespace structures {
 
 	void BinaryTree::_show(Node& node, int n) {
 		int i;
-	   	if(node!=NULL){
-			_show(node->right, n+1);
-			for(i=1; i<=n; i++) std::cout<<"     ";
+		if (node != NULL) {
+			_show(node->right, n + 1);
+			for (i = 1; i <= n; i++) std::cout << "     ";
 			std::cout << node->word << "(" << node->balance_factor << ")" << endl;
-			_show(node->left, n+1);
-	   		}
+			_show(node->left, n + 1);
+		}
 	}
 
 	int TreeAVL::_get_balance(Node& node) {
@@ -123,7 +123,8 @@ namespace structures {
 			if (node->balance_factor == 2) {
 				if (node->left->balance_factor > 0) {
 					_R_rotation(node);
-				} else {
+				}
+				else {
 					_LR_rotation(node);
 				}
 			}
@@ -134,7 +135,8 @@ namespace structures {
 			if (node->balance_factor == -2) {
 				if (node->right->balance_factor < 0) {
 					_L_rotation(node);
-				} else {
+				}
+				else {
 					_RL_rotation(node);
 				}
 			}
@@ -158,12 +160,13 @@ namespace structures {
 		int comp = 0;
 		for (int i = 1; i < lista.size(); i++) {
 			for (int j = i; j > 0; j--) {
-				if (lista[j]->repetitions > lista[j-1]->repetitions) {
+				if (lista[j]->repetitions > lista[j - 1]->repetitions) {
 					comp++;
 					Node tmp = lista[j];
-					lista[j] = lista[j-1];
-					lista[j-1] = tmp;
-				} else break;
+					lista[j] = lista[j - 1];
+					lista[j - 1] = tmp;
+				}
+				else break;
 			}
 		}
 
@@ -174,22 +177,23 @@ namespace structures {
 		if (lista.size() == 0) { return; }
 		int comp = 0;
 		int index, child;
-		int heap_size = lista.size() / 2, size = lista.size();
-		Node di;
+		unsigned int heap_size = lista.size() / 2;
+		int size = lista.size();
+		Node temp;
 
 		while (true) {
 
 			if (heap_size > 0) {
-				di = lista[--heap_size];
+				temp = lista[--heap_size];
 				comp++;
 			}
 			else {
 				size--;
-				if (size == 0) { 
-					std::cout << "Cantidad de comparaciones (heap sort): " << comp << endl; 
+				if (size == 0) {
+					std::cout << "Cantidad de comparaciones (heap sort): " << comp << endl;
 					return;
 				}
-				di = lista[size];
+				temp = lista[size];
 				lista[size] = lista[0];
 			}
 
@@ -198,11 +202,11 @@ namespace structures {
 
 			while (child < size) {
 				comp++;
-				if (child + 1 < size && lista[child + 1] > lista[child]) {
+				if (child + 1 < size && lista[child + 1]->repetitions <= lista[child]->repetitions) {
 					child++;
 				}
 				comp++;
-				if (lista[child] > di) {
+				if (lista[child]->repetitions < temp->repetitions) {
 					lista[index] = lista[child];
 					index = child;
 					child = index * 2 + 1;
@@ -210,7 +214,7 @@ namespace structures {
 				else break;
 			}
 
-			lista[index] = di;
+			lista[index] = temp;
 		}
 	}
 
