@@ -1,4 +1,3 @@
-//#include "stdafx.h"
 #include <sstream>
 #include <string>
 #include <vector>
@@ -11,7 +10,7 @@ namespace structures {
 		int balance_factor;
 		sNode* left;
 		sNode* right;
-		void set_right(sNode* node) { 
+		void set_right(sNode* node) {
 			right = node;
 			balance_factor--;
 		}
@@ -45,7 +44,7 @@ namespace structures {
 	};
 
 
-class TreeAVL : public BinaryTree {
+	class TreeAVL : public BinaryTree {
 	private:
 		void _L_rotation(Node& root);
 		void _R_rotation(Node& root);
@@ -55,7 +54,7 @@ class TreeAVL : public BinaryTree {
 		static int _get_balance(Node& node);
 	public:
 		void node_add(std::string word);
-};
+	};
 
 	class List {
 	private:
@@ -68,6 +67,9 @@ class TreeAVL : public BinaryTree {
 		void from_tree(Node& node) { _ird(node); };
 		void sort_insertion();
 		void sort_heap();
+		void new_sort_heap();
+		int leftChild(int i);
+		void percDown();
 		std::string to_string();
 	};
 }
