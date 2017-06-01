@@ -188,11 +188,8 @@ void iterative_method(ifstream& f, structures::TreeAVL& tree, string tree_type) 
 	while (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
 		no_marks(buffer);
-		if (tree.has(buffer)) tree.increment_reps(buffer);
-		else {
-			if (tree_type == "BTS") tree.structures::BinaryTree::node_add(buffer);
-			else tree.node_add(buffer);
-		}
+		if (tree_type == "BTS") tree.structures::BinaryTree::insert(buffer);
+		else tree.insert(buffer);
 	}
 }
 
@@ -201,11 +198,9 @@ void recursive_method(ifstream& f, structures::TreeAVL& tree, string tree_type) 
 	if (f >> buffer) {
 		std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
 		no_marks(buffer);
-		if (tree.has(buffer)) tree.increment_reps(buffer);
-		else {
-			if (tree_type == "BTS") tree.structures::BinaryTree::node_add(buffer);
-			else tree.node_add(buffer);
-		}
+		if (tree_type == "BTS") tree.structures::BinaryTree::insert(buffer);
+		else tree.insert(buffer);
+		
 		recursive_method(f, tree, tree_type);
 	}
 }
