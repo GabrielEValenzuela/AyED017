@@ -1,4 +1,4 @@
-#include "stdafx.h" //NO BORRAR
+//#include "stdafx.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -13,138 +13,132 @@ using std::vector;	using std::endl;
 
 namespace structures {
 	int BinaryTree::_get_height(Node& node) {
-		if (node == NULL) return -1;
-		int left = _get_height(node->left);
-		int right = _get_height(node->right);
-
-		return 1 + max(left, right);
+		if (node == NULL) return 0;
+		else return node->height;
 	}
 
 	int BinaryTree::get_height() {
 		return _get_height(root);
 	}
 
-	Node BinaryTree::_find(Node& node, string word) {
-		if (node == NULL) return NULL;
-		if (node->word == word) return node;
-		if (word < node->word) return _find(node->left, word);
-		if (word > node->word) return _find(node->right, word);
-	}
-
-	Node BinaryTree::find(string word) {
-		return _find(root, word);
-	}
-
-	bool BinaryTree::has(string word) {
-		if (find(word) != NULL) return true;
-		return false;
-	}
-
-	void BinaryTree::increment_reps(string word) {
-		find(word)->repetitions++;
-	}
-
-	void BinaryTree::_node_add(Node& node, string word) {
+	Node BinaryTree::_insert(Node& node, string word) {
 		if (node == NULL) {
-			node = new sNode;
-			node->word = word;
-			node->repetitions = 1;
-			// balance_factor = 0;
-			node->left = node->right = NULL;
+			Node tmp = new sNode;
+			tmp->word = word;
+			tmp->repetitions = 1;
+			tmp->height = 1;
+			tmp->left = tmp->right = NULL;
+
+			return tmp;
 		}
 
-		if (word < node->word) _node_add(node->left, word);
-		if (word > node->word) _node_add(node->right, word);
+		if (word < node->word) node->left = _insert(node->left, word);
+		if (word > node->word) node->right = _insert(node->right, word);
+		if (word == node->word) { 
+			node->repetitions++;
+			return node;
+		}
 	}
 
-	void BinaryTree::node_add(string word) {
-		_node_add(root, word);
+	void BinaryTree::insert(string word) {
+		root = _insert(root, word);
 	}
 
 	void BinaryTree::_show(Node& node, int n) {
 		int i;
-		if (node != NULL) {
-			_show(node->right, n + 1);
-			for (i = 1; i <= n; i++) std::cout << "     ";
-			std::cout << node->word << "(" << node->balance_factor << ")" << endl;
-			_show(node->left, n + 1);
-		}
+	   	if(node!=NULL){
+			_show(node->right, n+1);
+			for(i=1; i<=n; i++) std::cout<<"     ";
+			std::cout << node->word << "(" << node->height << ")" << endl;
+			_show(node->left, n+1);
+	   	}
 	}
 
 	int TreeAVL::_get_balance(Node& node) {
-		if (node == NULL) return 0;
-		else return node->balance_factor;
+    	if (node == NULL) return 0;
+    	return _get_height(node->left) - _get_height(node->right);
 	}
 
-	void TreeAVL::_L_rotation(Node& root) {
-		Node oldroot = root;
-		root = root->right;
-		oldroot->right = root->left;
-		int oldfactor = _get_balance(root->left);
-		root->left = oldroot;
-
-		oldroot->balance_factor = _get_balance(oldroot->left) - oldfactor;
-		root->balance_factor = _get_balance(root->left) - _get_balance(root->right);
+	Node TreeAVL::_R_rotation(Node& y) {
+	    Node x = y->left;
+	    Node T2 = x->right;
+	 
+	    // Perform rotation
+	    x->right = y;
+	    y->left = T2;
+	 
+	    // Update heights
+	    y->height = max(_get_height(y->left), _get_height(y->right))+1;
+	    x->height = max(_get_height(x->left), _get_height(x->right))+1;
+	 
+	    // Return new root
+	    return x;
 	}
 
-	void TreeAVL::_RL_rotation(Node& root) {
-		_R_rotation(root->right);
-		_L_rotation(root);
+	Node TreeAVL::_L_rotation(Node& x) {
+	    Node y = x->right;
+	    Node T2 = y->left;
+	 
+	    // Perform rotation
+	    y->left = x;
+	    x->right = T2;
+	 
+	    //  Update heights
+	    x->height = max(_get_height(x->left), _get_height(x->right))+1;
+	    y->height = max(_get_height(y->left), _get_height(y->right))+1;
+	 
+	    // Return new root
+	    return y;
 	}
 
-	void TreeAVL::_R_rotation(Node& root) {
-		Node oldroot = root;
-		root = root->left;
-		oldroot->left = root->right;
-		int oldfactor = _get_balance(root->right);
-		root->right = oldroot;
-
-		oldroot->balance_factor = oldfactor - _get_balance(oldroot->right);
-		root->balance_factor = _get_balance(root->left) - _get_balance(root->right);
-	}
-
-	void TreeAVL::_LR_rotation(Node& root) {
-		_L_rotation(root->left);
-		_R_rotation(root);
-	}
-
-	void TreeAVL::_node_add(Node& node, string word) {
+	Node TreeAVL::_insert(Node& node, string word) {
 		if (node == NULL) {
-			node = new sNode;
-			node->word = word;
-			node->repetitions = 1;
-			node->balance_factor = 0;
-			node->left = node->right = NULL;
+			Node tmp = new sNode;
+			tmp->word = word;
+			tmp->repetitions = 1;
+			tmp->height = 1;
+			tmp->left = tmp->right = NULL;
+
+			return tmp;
 		}
 
-		if (word < node->word) {
-			node->balance_factor++;
-			_node_add(node->left, word);
-			if (node->balance_factor == 2) {
-				if (node->left->balance_factor > 0) {
-					_R_rotation(node);
-				}
-				else {
-					_LR_rotation(node);
-				}
-			}
+		if (word < node->word) node->left = _insert(node->left, word);
+		if (word > node->word) node->right = _insert(node->right, word);
+		if (word == node->word) { 
+			node->repetitions++;
+			return node;
 		}
-		if (word > node->word) {
-			node->balance_factor--;
-			_node_add(node->right, word);
-			if (node->balance_factor == -2) {
-				if (node->right->balance_factor < 0) {
-					_L_rotation(node);
-				}
-				else {
-					_RL_rotation(node);
-				}
-			}
-		}
+
+		node->height = 1 + max(_get_height(node->left), _get_height(node->right));
+		int balance = _get_balance(node);
+
+		if (balance > 1 && word < node->left->word)
+        return _R_rotation(node);
+ 
+	    // Right Right Case
+	    if (balance < -1 && word > node->right->word)
+	        return _L_rotation(node);
+	 
+	    // Left Right Case
+	    if (balance > 1 && word > node->left->word)
+	    {
+	        node->left =  _L_rotation(node->left);
+	        return _R_rotation(node);
+	    }
+	 
+	    // Right Left Case
+	    if (balance < -1 && word < node->right->word)
+	    {
+	        node->right = _R_rotation(node->right);
+	        return _L_rotation(node);
+	    }
+	 
+	    /* return the (unchanged) node pointer */
+	    return node;
 	}
 
-	void TreeAVL::node_add(string word) {
-		_node_add(root, word);
+	void TreeAVL::insert(string word) {
+		root = _insert(root, word);
 	}
 
 	void List::_ird(Node& node) {
@@ -160,13 +154,12 @@ namespace structures {
 		int comp = 0;
 		for (int i = 1; i < lista.size(); i++) {
 			for (int j = i; j > 0; j--) {
-				if (lista[j]->repetitions > lista[j - 1]->repetitions) {
+				if (lista[j]->repetitions > lista[j-1]->repetitions) {
 					comp++;
 					Node tmp = lista[j];
-					lista[j] = lista[j - 1];
-					lista[j - 1] = tmp;
-				}
-				else break;
+					lista[j] = lista[j-1];
+					lista[j-1] = tmp;
+				} else break;
 			}
 		}
 
