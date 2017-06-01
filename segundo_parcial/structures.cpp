@@ -21,27 +21,23 @@ namespace structures {
 		return _get_height(root);
 	}
 
-	Node BinaryTree::_insert(Node& node, string word) {
+	void BinaryTree::_insert(Node& node, string word) {
 		if (node == NULL) {
-			Node tmp = new sNode;
-			tmp->word = word;
-			tmp->repetitions = 1;
-			tmp->height = 1;
-			tmp->left = tmp->right = NULL;
+			node = new sNode;
+			node->word = word;
+			node->repetitions = 1;
+			node->height = 1;
+			node->left = node->right = NULL;
 
-			return tmp;
 		}
 
-		if (word < node->word) node->left = _insert(node->left, word);
-		if (word > node->word) node->right = _insert(node->right, word);
-		if (word == node->word) { 
-			node->repetitions++;
-			return node;
-		}
+		if (word < node->word) _insert(node->left, word);
+		if (word > node->word) _insert(node->right, word);
+		if (word == node->word) node->repetitions++;
 	}
 
 	void BinaryTree::insert(string word) {
-		root = _insert(root, word);
+		_insert(root, word);
 	}
 
 	void BinaryTree::_show(Node& node, int n) {
@@ -144,6 +140,7 @@ namespace structures {
 	void List::_ird(Node& node) {
 		if (node != NULL) {
 			_ird(node->left);
+			std::cout << node->word << endl;
 			lista.push_back(node);
 			_ird(node->right);
 		}
